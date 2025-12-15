@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -e
+
+NETWORK_NAME="my_network"
+
+# Ensure the shared network exists
+if ! docker network ls --format '{{.Name}}' | grep -wq "$NETWORK_NAME"; then
+  docker network create "$NETWORK_NAME"
+else
+  echo "🌐 Network '$NETWORK_NAME' already exists."
+fi
+
+# Build containers first
+docker compose build
+
+docker compose up -d
+
+# Hacky watcher solution
+sleep 2
+docker exec -it nestuity-service ./gradlew bootRun --continuous --no-daemon

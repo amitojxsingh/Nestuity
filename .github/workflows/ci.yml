@@ -1,0 +1,65 @@
+name: CI - Build & Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  frontend-tests:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
+        env:
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          NEXT_PUBLIC_API_URL: http://localhost:8080
+          CI: 'true'
+
+      - name: Run Cypress Component Tests
+        working-directory: ./frontend
+        run: xvfb-run npx cypress run --component
+        env:
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          NEXT_PUBLIC_API_URL: http://localhost:8080
+          CI: 'true'
+          CYPRESS: 'true'
+
+      - name: Run Cypress E2E Tests
+        working-directory: ./frontend
+        run: npx start-server-and-test "npm run dev" http://localhost:3000 "xvfb-run npx cypress run --e2e"
+        env:
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          NEXT_PUBLIC_API_URL: http://localhost:8080
+          CI: 'true'
+          CYPRESS: 'true'
+
+  backend-tests:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Run Spring Boot Gradle Tests
+        working-directory: ./nestuity-service
+        run: ./gradlew test

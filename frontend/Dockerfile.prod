@@ -1,0 +1,42 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Disable telemetry
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Install wget for health checks
+RUN apk add --no-cache wget
+
+# Install dependencies based on the preferred package manager
+# Note: We need devDependencies for the build process (tailwindcss, typescript, etc.)
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci --include=dev; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i; \
+  else echo "Warning: Lockfile not found. It is recommended to commit lockfiles to version control." && yarn install; \
+  fi
+
+# Copy source code and config files (same as dev)
+COPY src ./src
+COPY public ./public
+COPY next.config.ts .
+COPY tsconfig.json .
+COPY postcss.config.cjs .
+
+# Accept build arguments for Next.js public variables
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+
+# Build the application
+RUN npm run build
+
+# Set production environment after build
+ENV NODE_ENV=production
+
+# Expose port 3000 (internal to Docker network)
+EXPOSE 3000
+
+# Start Next.js in production mode
+CMD npm start

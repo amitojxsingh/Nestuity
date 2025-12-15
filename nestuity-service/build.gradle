@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.6'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.github.spotbugs' version '6.0.26'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'nestuity-service'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-database-postgresql'
+    implementation 'com.mailjet:mailjet-client:5.2.1'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    runtimeOnly 'org.postgresql:postgresql'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    compileOnly 'org.projectlombok:lombok:1.18.34'  // to reduce boilerplate code
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// SpotBugs Configuration
+spotbugs {
+    ignoreFailures = true  // Don't fail the build on SpotBugs issues
+    effort = 'max'         // Maximum effort for analysis
+    reportLevel = 'medium' // Report medium and high priority issues
+    showProgress = true    // Show progress during analysis
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
+    reports {
+        html {
+            required = true
+            outputLocation = file("$buildDir/reports/spotbugs/spotbugs.html")
+        }
+        xml {
+            required = false
+        }
+    }
+}

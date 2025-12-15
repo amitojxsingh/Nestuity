@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Exit on error
+set -e
+
+# Stop and remove containers, networks (but not volumes unless you choose)
+docker compose down --remove-orphans

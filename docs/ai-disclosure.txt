@@ -1,0 +1,6 @@
+During the development process we have used the follwing AI models:
+
+Claude Sonet 4.5
+GPT-5
+
+[feel free to add others]

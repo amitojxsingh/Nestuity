@@ -1,0 +1,11 @@
+nestuity-service/gradlew text eol=lf
+
+# Treat SVGs and other images as binary
+*.svg binary
+
+# Optional: enforce LF for text files
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf

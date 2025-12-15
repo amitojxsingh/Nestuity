@@ -1,0 +1,51 @@
+# Stage 1: Build the Spring Boot application
+FROM eclipse-temurin:21-jdk AS builder
+
+WORKDIR /app
+
+# Copy Gradle wrapper and build configuration
+COPY nestuity-service/build.gradle nestuity-service/settings.gradle nestuity-service/gradlew ./
+COPY nestuity-service/gradle gradle
+
+# Make gradlew executable
+RUN chmod +x gradlew
+
+# Download dependencies (cached layer)
+RUN ./gradlew dependencies --no-daemon
+
+# Copy source code
+COPY nestuity-service/src ./src
+
+# Build the application (creates fat JAR)
+RUN ./gradlew bootJar --no-daemon
+
+# Stage 2: Production runtime
+FROM eclipse-temurin:21-jre-alpine AS runner
+
+WORKDIR /app
+
+# Install Python 3 and pip for price scraper
+RUN apk add --no-cache python3 py3-pip wget
+
+# Create a non-root user
+RUN addgroup -S spring && adduser -S spring -G spring
+
+# Copy the built JAR from builder stage
+COPY --from=builder /app/build/libs/*.jar app.jar
+
+# Copy price-scraper and install dependencies
+COPY price-scraper /app/price-scraper
+RUN pip3 install --no-cache-dir --break-system-packages -r /app/price-scraper/requirements.txt
+
+# Change ownership to spring user
+RUN chown -R spring:spring /app
+
+# Switch to non-root user
+USER spring
+
+# Expose port 8080 (internal to Docker network)
+EXPOSE 8080
+
+# Run the application
+ENTRYPOINT ["java"]
+CMD ["-jar", "app.jar"]

@@ -1,0 +1,16 @@
+site_name: Nestuity Documentation
+theme:
+  name: material
+nav:
+  - Home: home.md
+  - Project Requirements: project-requirements.md
+  - Project Management: project-management.md
+  - Software Design: software-design.md
+  - API Documentation: api-documentation.md
+  - Teamwork: teamwork.md
+  - Traceability Matrix: traceability-matrix.md
+  - Final Documentation: final-documentation.md
+plugins:
+  - redirects:
+      redirect_maps:
+        'index.md': 'home.md'

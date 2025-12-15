@@ -1,0 +1,20 @@
+{
+  "retailers": {
+    "amazon": [
+      "https://www.amazon.ca/Diapers-Size-128-count-Disposable/dp/B007UXE4R0/ref=sr_1_5?crid=3JNAG3WARD977&dib=eyJ2IjoiMSJ9.HQ8SqlAcedHoSBa9R_DcRskt2m7dU3oBi8aICpr5R7DScL55-KGbU9u37mCjNZwpoFxbHlXkVDMlI-fu7lcrUxY2IaIIR5DKlilxLVzxeFUVDJyaLOtsxudwokNapeeDtlwOhN1pHcdkRaNzPdpLY1jpmTOyWRF6zH0BqQ8oIqGZ-dP4gfhM8PZ6EcJ6nypCoY5TzHXeIJe6Kr4k0WYGNGmC9UoGjyQZkU3kOACv4IoHxrYq7PaKqDLC-EMCkT03tTm-8nBJrizyIyAvUwSLu7osAE1CBClDBn3DqwN4m_Q.VnPJTCaEJXG_icAWo-SA3058Ofk3-jgAYd1uW89xhSY&dib_tag=se&keywords=diapers%2Bsize%2B5&qid=1759505203&sprefix=diapers%2Caps%2C151&sr=8-5&th=1",
+      "https://www.amazon.ca/Safety-1st-3-in-1-Nursery-Thermometer/dp/B013DUHCSG/ref=sr_1_31?crid=3HWJGHAHGMA1Z&dib=eyJ2IjoiMSJ9.bhAK3SUgCd2A3I1YJ_xotlAcGBqX6ePm9HPldT2ENA9N_2EEg-4tKUJb9fMRaGhv3o8EjRkLbVgy7-Zd638MsRVOooaMe1pGVQ4utsmfaLXPAnf8yV0UG5F79NTOaqdorMI-Or5BQebfhtekSlgXr_fwsjVuGDEWfvXq0EuM1CsscSLFppLunBG6N2ktgnpksgbzH1eqGRVR2xhdvfgiLNyQmqEMv4oi_FVfct0iaETJM5xQKTbpTYx-J2ps3ffCUPcuYlngquydjRPa4bQr8oML5PWqYx9PVeZyAIUIEW0.Qr4wnZ6oJV0v4M2yufnSM34fLY8cWnInrbSijLts-wM&dib_tag=se&keywords=baby+essentials&qid=1759509597&sprefix=baby+es%2Caps%2C154&sr=8-31"
+    ],
+    "walmart": [
+    "https://www.walmart.ca/en/ip/Pampers-Swaddlers-Diapers-Super-Econo-Pack/2XJS6FKW9937",
+    "https://www.walmart.ca/en/ip/HUGGIES-Little-Snugglers-Baby-Diapers-Giga-Pack-Sizes-NB-2-84-84-Count/6000199406839",
+    "https://www.walmart.ca/en/ip/Pull-Ups-Boys-Potty-Training-Pants-Economy-Pack-Size-2T-6T/6000196995563?from=/search/?query=pull%20ups&amp;cat_id=0&amp;facet=type%3ADiapers%20%26%20Wipes",
+    "https://www.walmart.ca/en/ip/Goodnites-Boys-Nighttime-Bedwetting-Underwear-Giga-Pack-Size-XS-XXL-44-24-Count/6000207415768?from=/search/?query=goodnites&amp;cat_id=0&amp;facet=type%3ADiapers%20%26%20Wipes",
+    "https://www.walmart.ca/en/ip/Rascals-Premium-Diapers-Size-5-Carton-112-Count/6000207432499?classType=VARIANT&athbdg=L1600&from=/search/?query=rascals%20diapers&amp;cat_id=0&amp;facet=type%3ADiapers%20%26%20Wipes",
+    "https://www.walmart.ca/en/ip/Rascals-Premium-Diapers-Size-7-90-Count/3NE1BKP7V1O5?classType=REGULAR&athbdg=L1102&from=/search/?query=rascals%20diapers&amp;cat_id=0&amp;facet=type%3ADiapers%20%26%20Wipes",
+    "https://www.walmart.ca/en/ip/Huggies-Little-Snugglers-Diapers-Jumbo-Pack-Size-Preemie-2/207610",
+    "https://www.walmart.ca/en/ip/Huggies-Little-Snugglers-Diapers-Jumbo-Pack-Size-Preemie-2/6000199405488",
+    "https://www.walmart.ca/en/ip/Pampers-Sensitive-Baby-Wipes-Clinically-Proven-Water-Based-Hypoallergenic-and-Unscented-Baby-Wipes-1008-Baby-Wipes-Total-12X-Flip-Top-Packs/5IJ05MVDEV3B",
+    "https://www.walmart.ca/en/ip/Johnson-s-Hand-Face-Wipes-25-wipes/6000199413881"
+    ]
+  }
+}

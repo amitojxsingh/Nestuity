@@ -1,0 +1,109 @@
+services:
+  postgres:
+    container_name: nestuity-postgres
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+    networks:
+      - my_network
+    # sanity check to ensure postgres is running
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  nestuity-frontend:
+    container_name: nestuity-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment:
+      ENV_VARIABLE: ${ENV_VARIABLE}
+      NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+      CI: "false"
+      BACKEND_INTERNAL_URL: http://nestuity-service:8080
+    env_file:
+      - .env
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/src:/styles
+      - ./frontend/public:/app/public
+      - ./frontend/postcss.config.mjs:/app/postcss.config.mjs
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - my_network
+    # wait for backend to be ready
+    depends_on:
+      - nestuity-service
+  
+  nestuity-service:
+    container_name: nestuity-service
+    build:
+      context: .
+      dockerfile: ./nestuity-service/Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: ${ENV_VARIABLE}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+
+      MAILJET_API_KEY: ${MAILJET_API_KEY}
+      MAILJET_API_SECRET: ${MAILJET_API_SECRET}
+      MAILJET_EMAIL_FROM: ${MAILJET_EMAIL_FROM}
+
+      TEMPLATE_WELCOME_ID: ${TEMPLATE_WELCOME_ID}
+      TEMPLATE_DIAPER_REMINDER_ID: ${TEMPLATE_DIAPER_REMINDER_ID}
+      TEMPLATE_WEEKLY_SUMMARY_ID: ${TEMPLATE_WEEKLY_SUMMARY_ID}
+
+      SCRAPER_API_KEY: ${SCRAPER_API_KEY}
+      BACKEND_API_URL: ${BACKEND_API_URL:-http://nestuity-service:8080}
+    volumes:
+      - ./nestuity-service:/app
+      - ./nestuity-service/build:/app/build
+      - ./price-scraper:/app/price-scraper
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - my_network
+
+    # Add more containers below (e.g. nginx, postgres, etc.)
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  pgadmin:
+    container_name: nestuity-pgadmin
+    image: dpage/pgadmin4:7
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "8081:80"  # access pgAdmin on localhost:8081
+    networks:
+      - my_network
+    depends_on:
+      - postgres
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  my_network:
+    driver: bridge
+#    external: true  # failing [network my_network declared as external, but could not be found]
+
+# Define volume for persistent data storage
+volumes:
+  postgres-data:

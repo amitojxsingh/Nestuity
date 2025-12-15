@@ -1,0 +1,119 @@
+#!/bin/bash
+# dexec - Generic Docker exec helper (extended for tests)
+
+# Load .env
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+fi
+
+# Usage/help function
+usage() {
+  echo "Usage: ./dexec <service> [options]"
+  echo ""
+  echo "Available services:"
+  echo "  postgres        Connect to Postgres container"
+  echo "                  Options:"
+  echo "                    -c \"SQL_COMMAND\"   Run a single SQL query"
+  echo ""
+  echo "  tests           Run tests inside backend/frontend containers"
+  echo "                  Options for tests:"
+  echo "                    backend              Run all Gradle tests"
+  echo "                    backend <TestClass> Run specific backend test"
+  echo "                    frontend             Run all Cypress tests"
+  echo "                    frontend <TestFile> Run specific Cypress test"
+  echo ""
+  echo "Generic usage:"
+  echo "  ./dexec <container> [command]   Execute a command in any container"
+  echo ""
+  echo "Examples:"
+  echo "  ./dexec postgres                # Open interactive psql shell"
+  echo "  ./dexec postgres -c \"SELECT * FROM baby_product;\""
+  echo "  ./dexec nestuity-service bash   # Exec into nestuity-service container"
+  echo "  ./dexec tests backend           # Run all backend tests"
+  echo "  ./dexec tests backend com.nestuity.service.ui.LandingPageTest"
+  echo "  ./dexec tests frontend"
+  echo "  ./dexec tests frontend \"2-advanced-examples/cypress_api.cy.js\""
+  exit 1
+}
+
+# If no arguments, show usage
+if [ $# -lt 1 ]; then
+  usage
+fi
+
+SERVICE="$1"
+shift || true
+
+case "$SERVICE" in
+  postgres)
+    POSTGRES_CONTAINER="nestuity-postgres"
+    SQL_CMD=""
+
+    while [[ $# -gt 0 ]]; do
+      case "$1" in
+        -c)
+          SQL_CMD="$2"
+          shift 2
+          ;;
+        *)
+          echo "Unknown flag: $1"
+          exit 1
+          ;;
+      esac
+    done
+
+    export PGPASSWORD="$POSTGRES_PASSWORD"
+
+    if [ -n "$SQL_CMD" ]; then
+      docker exec -i "$POSTGRES_CONTAINER" psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "$SQL_CMD"
+    else
+      docker exec -it "$POSTGRES_CONTAINER" psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+    fi
+    ;;
+
+  tests)
+    if [ $# -lt 1 ]; then
+      usage
+    fi
+    TEST_TYPE="$1"
+    TEST_NAME="$2"
+
+    case "$TEST_TYPE" in
+      backend)
+        if [ -z "$TEST_NAME" ]; then
+          docker exec -it nestuity-service ./gradlew test --stacktrace
+        else
+          docker exec -it nestuity-service ./gradlew test --tests "$TEST_NAME" --stacktrace
+        fi
+        ;;
+      frontend)
+        # Check if Cypress container exists
+        if ! docker ps -a --format '{{.Names}}' | grep -q "cypress-tests"; then
+          echo "Cypress container does not exist. Building and starting it..."
+          docker-compose -f docker-compose.test.yaml up -d --build cypress-tests
+        fi
+
+        # Start container if it exists but is stopped
+        if ! docker ps --format '{{.Names}}' | grep -q "cypress-tests"; then
+          echo "Starting Cypress container..."
+          docker-compose -f docker-compose.test.yaml start cypress-tests
+        fi
+
+        # Run the tests
+        if [ -z "$TEST_NAME" ]; then
+          docker exec -it cypress-tests npx cypress run --headless 
+        else
+          docker exec -it cypress-tests npx cypress run --headless --spec "cypress/e2e/$TEST_NAME"
+        fi
+        ;;
+      *)
+        echo "Unknown test type: $TEST_TYPE"
+        usage
+        ;;
+    esac
+    ;;
+
+  *)
+    docker exec -it "$SERVICE" "$@"
+    ;;
+esac
