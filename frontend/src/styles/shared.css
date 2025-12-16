@@ -1,0 +1,11 @@
+.layout {
+    @apply px-4 md:px-5;
+}
+
+.dashboard-page-content {
+    @apply w-full flex justify-center py-3;
+}
+
+.invert {
+    filter: invert(1);
+}

@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@400;700&display=swap');
+
+@import "tailwindcss";
+@import './icons.css';
+@import './widgets.css';
+@import './inputs.css';
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@import "./shared.css" layer(base);
+@import "./landing.css" layer(base);
+@import "./dashboard.css" layer(base);
+@import "./header.css" layer(base);
+
+:root {
+  /* --- Primitives --- */
+    --off-white: #F8F9F1;
+    --dark-purple: #6F0094;
+    --dark-blue: #0543BF;
+    --light-blue: #D7E8FF;
+    --light-purple: #B194FF;
+    --black: #231F20;
+    --white: #FCFCF9;
+    --dark-grey: #4B5563;
+    --grey: #E0E0E0;
+    --light-grey: #EEEEEE;
+    --grey-300:  #D1D5DB;
+    --red: #F44336;
+    --green: #4CAF50;
+
+    /* --- Fonts --- */
+    --font-anuphan: "Anuphan", system-ui, sans-serif;
+
+    /* --- Headings scale --- */
+    --text-h1: 2rem;
+    --text-h2: 1.5rem;
+    --text-h3: 1.25rem;
+    --text-h4: 1rem;
+
+    --background: var(--off-white);
+    --foreground: var(--black);
+}
+
+/* --- Spacing (mobile) --- */
+:root {
+    /* Spacing scale (semantic) */
+    --spacing-1: 0.5rem;   /* 8px */
+    --spacing-2: 0.75rem;  /* 12px */
+    --spacing-3: 1rem;     /* 16px */
+    --spacing-4: 1.25rem;  /* 20px */
+    --spacing-5: 1.5rem;   /* 24px */
+    --spacing-6: 3rem;     /* 48px */
+}
+
+/* --- Medium screens (tablet) --- */
+@media (min-width: 640px) {
+    :root {
+        --spacing-1: 0.75rem;  /* 12px */
+        --spacing-2: 1rem;     /* 16px */
+        --spacing-3: 1.25rem;  /* 20px */
+        --spacing-4: 1.5rem;   /* 24px */
+        --spacing-5: 2rem;     /* 32px */
+        --spacing-6: 4rem;     /* 64px */
+    }
+}
+
+/* --- Large screens (desktop) --- */
+@media (min-width: 1024px) {
+    :root {
+        --spacing-1: 0.75rem;  /* 12px */
+        --spacing-2: 1rem;     /* 16px */
+        --spacing-3: 1.5rem;   /* 24px */
+        --spacing-4: 2.5rem;   /* 40px */
+        --spacing-5: 4rem;     /* 64px */
+        --spacing-6: 7rem;     /* 112px */
+    }
+}
+
+/* --- Semantics --- */
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-anuphan: var(--font-anuphan);
+
+    --color-primary: var(--light-blue);
+    --color-secondary: var(--light-purple);
+
+    /* Supporting / accent colors */
+    --color-accent-primary: var(--dark-blue);
+    --color-accent-secondary: var(--dark-purple);
+    --color-white: var(--off-white);
+    --color-highlight: var(--white);
+    --color-grey: var(--grey);
+    --color-light-grey: var(--light-grey);
+    --color-dark-grey: var(--dark-grey);
+    --color-red: var(--red);
+    --color-green: var(--green);
+    --color-border-primary: var(--grey-300);
+
+    --font-body: var(--font-anuphan);
+    --font-heading: var(--font-anuphan);
+
+    --spacing-1: var(--spacing-1);
+    --spacing-2: var(--spacing-2);
+    --spacing-3: var(--spacing-3);
+    --spacing-4: var(--spacing-4);
+    --spacing-5: var(--spacing-5);
+    --spacing-6: var(--spacing-6);
+
+    /* Default rounded radius */
+    --radius: 0.625rem;
+}
+
+@utility scrollbar-hidden {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+@layer base {
+    body {
+        font-family: var(--font-body);
+        background-color: var(--background);
+        color: var(--foreground);
+    }
+
+    h1 {
+        font-family: var(--font-heading);
+        font-size: var(--text-h1);
+        font-weight: 700;
+    }
+
+    h2 {
+        font-family: var(--font-heading);
+        font-size: var(--text-h2);
+        font-weight: 700;
+    }
+
+    h3 {
+        font-family: var(--font-heading);
+        font-size: var(--text-h3);
+        font-weight: 700;
+    }
+
+    h4 {
+        font-family: var(--font-heading);
+        font-size: var(--text-h4);
+        font-weight: 700;
+    }
+
+}
+
+@layer utilities {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+}

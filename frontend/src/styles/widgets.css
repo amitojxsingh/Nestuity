@@ -1,0 +1,11 @@
+.widget {
+    @apply bg-background rounded shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] p-2;
+}
+
+.result-text {
+  @apply text-lg font-medium leading-snug text-dark-grey;
+}
+
+.result-value {
+  @apply font-bold text-black;
+}

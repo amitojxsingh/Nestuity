@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" viewBox="0 0 39 52.5" version="1.1" x="0px" y="0px">
+  <title>icon-Member</title>
+  <desc>Created with Sketch.</desc>
+  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+    <g sketch:type="MSArtboardGroup" transform="translate(-6.000000, -4.000000)" fill="#ffffff">
+      <g sketch:type="MSLayerGroup" transform="translate(6.000000, 4.000000)">
+        <path d="M19.5,25 C26.4035594,25 32,19.4035594 32,12.5 C32,5.59644063 26.4035594,0 19.5,0 C12.5964406,0 7,5.59644063 7,12.5 C7,19.4035594 12.5964406,25 19.5,25 L19.5,25 Z M19.5,21 C14.8055796,21 11,17.1944204 11,12.5 C11,7.80557963 14.8055796,4 19.5,4 C24.1944204,4 28,7.80557963 28,12.5 C28,17.1944204 24.1944204,21 19.5,21 L19.5,21 Z" sketch:type="MSShapeGroup" fill="#ffffff"/>
+        <path d="M4,35.0053084 L4,35.0053084 L4,35.9946916 C4,37.100475 4.89800183,38 5.99854598,38 L14.6215188,38 L20.6274206,38 L26.6225062,38 L33.0096941,38 C34.1083917,38 35,37.105836 35,35.9946916 L35,35.0053084 C35,33.6651088 33.7827129,32.2444009 32.4617057,32.041169 L24.8218368,30.8658046 C21.9467624,30.4234854 17.0518603,30.4236973 14.1781632,30.8658046 L6.53829426,32.041169 C5.21243747,32.245147 4,33.6601883 4,35.0053084 L4,35.0053084 Z M0,35.0053084 C0,31.6886682 2.65015076,28.5922845 5.93006553,28.0876822 L13.5699345,26.9123178 C16.8450192,26.4084586 22.1501508,26.4077155 25.4300655,26.9123178 L33.0699345,28.0876822 C36.3450192,28.5915414 39,31.6936084 39,35.0053084 L39,35.9946916 C39,39.3113318 36.3211788,42 33.0096941,42 L26.6225062,42 L14.6215188,42 L5.99854598,42 C2.68564051,42 0,39.3063916 0,35.9946916 L0,35.0053084 L0,35.0053084 Z" sketch:type="MSShapeGroup" fill="#ffffff"/>
+      </g>
+    </g>
+  </g>
+  <text x="0" y="57" fill="#ffffff" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif"></text>
+  <text x="0" y="62" fill="#ffffff" font-size="5px" font-weight="bold" font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif"></text>
+</svg>

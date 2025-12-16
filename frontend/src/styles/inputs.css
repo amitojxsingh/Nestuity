@@ -1,0 +1,3 @@
+.input {
+    @apply border border-grey rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent-primary;
+}

@@ -1,0 +1,21 @@
+.section-header {
+    @apply fixed top-0 w-full z-10;
+}
+
+.header-container {
+    @apply bg-transparent py-3;
+}
+
+.header {
+    @apply flex bg-background/90 rounded-full backdrop-blur-md shadow-[0_4px_6px_-1px_rgba(0,0,0,0.2)] py-1 px-3 h-17;
+}
+
+.header a {
+    @apply text-accent-primary font-semibold text-lg text-nowrap
+        hover:underline underline-offset-[6px] decoration-[1.5px]
+        transition-all duration-200;
+}
+
+.header .icon-container {
+    @apply w-[48px] h-[48px] justify-items-center content-center;
+}

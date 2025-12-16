@@ -1,0 +1,27 @@
+.feature {
+    @apply flex flex-col gap-1;
+}
+
+.section-layout {
+    @apply grid grid-cols-1 gap-6;
+}
+
+.feature img {
+    @apply z-0;
+}
+
+.getting-started-button {
+    @apply px-2 py-[11px] w-40 bg-white text-accent-primary rounded transition-colors cursor-pointer text-center;
+}
+
+.getting-started-button:hover {
+    @apply bg-white/80;
+}
+
+.getting-started-button-enhanced {
+    @apply px-8 py-2.5 bg-gradient-to-r from-accent-primary to-accent-secondary text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer text-center inline-block;
+}
+
+.gradient-hero {
+  @apply bg-gradient-to-b from-accent-primary via-secondary to-background;
+}
